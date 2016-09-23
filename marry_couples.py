@@ -1,11 +1,17 @@
 def marry(women, men):
-	married = {}
-	couples = []
-	for man in men:
-		for woman in men[man]:
-			if woman not in married:
-				married[woman] = man
-				couples.append([man, woman])
+	couples = {}
+	men_iter = [(man, candidates) for (man, candidates) in men.items()]
+
+	while (len(men_iter) > 0):
+		(man, candidates) = men_iter.pop()
+		for woman in candidates:
+			if woman not in couples:
+				couples[woman] = man
+				break
+
+			if women[woman].index(couples[woman]) > women[woman].index(man):
+				men_iter.append((couples[woman], men[couples[woman]]))
+				couples[woman] = man
 				break
 
 	return couples
@@ -19,10 +25,10 @@ if __name__ == "__main__":
 
 	men = {
 		"Felipao": ["Amy", "Bertha", "Clare"],
+		"Maquinista": ["Clare", "Bertha", "Amy"],
 		"Salsicha": ["Clare", "Amy", "Bertha"],
-		"Maquinista": ["Clare", "Bertha", "Amy"]
 	}
 
 	couples = marry(women, men)
-	for man, woman in couples:
-		print(man, woman)
+	for woman, man in couples.items():
+		print(woman, man)
