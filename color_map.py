@@ -28,7 +28,7 @@ def add_possible_color(states, neighboors, color):
 	for neighboor in neighboors:
 		possible_colors = states[neighboor]['possible_colors']
 		if color not in possible_colors:
-			possible_colors.insert(0, color)
+			possible_colors.append(color)
 
 def remove_possible_color(states, neighboors, color):
 	for neighboor in neighboors:
